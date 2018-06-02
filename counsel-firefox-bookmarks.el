@@ -1,4 +1,4 @@
-;;; counsel-firefox-bookmarks.el --- Ivy interface of firefox bookmarks  -*- lexical-binding: t; -*-
+;;; counsel-firefox-bookmarks.el --- Complete Firefox bookmarks with Ivy  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015-2018  Free Software Foundation, Inc.
 

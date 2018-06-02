@@ -1,23 +1,19 @@
-Ivy interface of firefox bookmarks.
+Complete Firefox bookmarks with [Ivy](https://github.com/abo-abo/swiper/).
 
-Install first
+There is a pull request [feat: firefox bookmarks by tangxinfa · Pull Request #1593 · abo-abo/swiper](https://github.com/abo-abo/swiper/pull/1593)
+devote to include it in [Ivy](https://github.com/abo-abo/swiper/), once this
+objective reached, this project will destroy.
+
+Install `counsel-firefox-bookmarks`
 
     (add-to-list 'load-path "<path-of-counsel-firefox-bookmarks>")
     (require 'counsel-firefox-bookmarks)
 
-Search firefox bookmarks
+Start search firefox bookmarks with [Ivy](https://github.com/abo-abo/swiper/)
 
     M-x counsel-firefox-bookmarks
 
-You will have to enable html bookmarks in firefox:
-
-open "about:config" in firefox address bar, double click on this line to set
-value to true:
-
-    user_pref("browser.bookmarks.autoExportHTML", false);
-
-You should have now:
-
-    user_pref("browser.bookmarks.autoExportHTML", true);
-
-After closing firefox, you will be able to browse your bookmarks.
+This requires HTML bookmark export to be enabled in Firefox. To do this, open
+URL [about:config](about:config) in Firefox, make sure that the value of the
+setting `"browser.bookmarks.autoExportHTML"` is `"true"` by, say,
+double-clicking it, and then restart Firefox.
