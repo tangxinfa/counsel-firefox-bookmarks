@@ -23,9 +23,8 @@
 ;;; Code:
 
 (require 'ivy)
-(require 'files)
 
-;;** `counsel-firefox-bookmarks`
+;;** `counsel-firefox-bookmarks'
 (defvar counsel-firefox-bookmarks-file
   (car (file-expand-wildcards "~/.mozilla/firefox/*/bookmarks.html"))
   "Firefox's automatically exported HTML bookmarks file.")
