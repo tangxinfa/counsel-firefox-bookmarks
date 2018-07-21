@@ -25,6 +25,11 @@
 (require 'ivy)
 
 ;;** `counsel-firefox-bookmarks'
+(ivy-set-actions
+ 'counsel-firefox-bookmarks
+ `(("n" ,(lambda (x) (kill-new (second x))) "copy name")
+   ("l" ,(lambda (x) (kill-new (third x))) "copy location")))
+
 (defvar counsel-firefox-bookmarks-file
   (car (file-expand-wildcards "~/.mozilla/firefox/*/bookmarks.html"))
   "Firefox's automatically exported HTML bookmarks file.")
@@ -34,13 +39,18 @@
   "Face used by `counsel-firefox-bookmarks' for tags."
   :group 'ivy-faces)
 
+(defface counsel-firefox-bookmarks-location
+  '((t :inherit link))
+  "Face used by `counsel-firefox-bookmarks' for locations."
+  :group 'ivy-faces)
+
 (defun counsel-firefox-bookmarks-action (x)
   "Browse candidate X."
-  (browse-url (cdr x)))
+  (browse-url (third x)))
 
 (declare-function xml-substitute-special "xml")
 
-(defun counsel-firefox-bookmarks--candidates ()
+(defun counsel--firefox-bookmarks-candidates ()
   "Return list of `counsel-firefox-bookmarks' candidates."
   (unless (and counsel-firefox-bookmarks-file
                (file-readable-p counsel-firefox-bookmarks-file))
@@ -56,10 +66,8 @@
               "<a href=\"\\([^\"]+?\\)\"[^>]*?>\\([^<]*?\\)</a>" nil t)
         (let* ((a (match-string 0))
                (href (match-string 1))
-               (text (if (= (match-beginning 2) (match-end 2))
-                         href
-                       (save-match-data
-                         (xml-substitute-special (match-string 2)))))
+               (name (save-match-data
+                       (xml-substitute-special (match-string 2))))
                (tags (and (string-match "tags=\"\\([^\"]+?\\)\"" a)
                           (mapconcat
                            (lambda (tag)
@@ -69,8 +77,12 @@
                              tag)
                            (split-string (match-string 1 a) "," t)
                            ":"))))
-          (push (cons (if tags (concat text " :" tags ":") text)
-                      href)
+          (push (list
+                 (concat (if tags (concat name " :" tags ":") name)
+                         " "
+                         (propertize href 'face 'counsel-firefox-bookmarks-location))
+                 name
+                 href)
                 candidates)))
       candidates)))
 
@@ -82,7 +94,7 @@ To do this, open URL `about:config' in Firefox, make sure that
 the value of the setting \"browser.bookmarks.autoExportHTML\" is
 \"true\" by, say, double-clicking it, and then restart Firefox."
   (interactive)
-  (ivy-read "bookmark: " (counsel-firefox-bookmarks--candidates)
+  (ivy-read "bookmark: " (counsel--firefox-bookmarks-candidates)
             :history 'counsel-firefox-bookmarks-history
             :action #'counsel-firefox-bookmarks-action
             :caller 'counsel-firefox-bookmarks
