@@ -1,3 +1,9 @@
+Suggest to use
+[firefox-bookmarks](https://github.com/tangxinfa/firefox-bookmarks) which use
+native api, and should support extensive completion frameworks.
+
+-------------------------------------------------------------------------
+
 Complete Firefox bookmarks with [Ivy](https://github.com/abo-abo/swiper/).
 
 There is a pull request [feat: firefox bookmarks by tangxinfa · Pull Request #1593 · abo-abo/swiper](https://github.com/abo-abo/swiper/pull/1593)
